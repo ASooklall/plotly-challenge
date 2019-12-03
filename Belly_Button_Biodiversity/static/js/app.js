@@ -1,11 +1,11 @@
 function buildMetadata(sample) {
   // @TODO: Complete the following function that builds the metadata panel
     // Use `d3.json` to fetch the metadata for a sample
-  var selID = d3.select("#selDataset").node.property()
-  console.log(selID)
+  // var selID = d3.select("#selDataset").node.text()
+  // console.log(selID)
 
   var url = "/metadata/940";
-  d3.json(url).then(sample =>{
+  d3.json(url).then(data =>{
     // console.log(sample)
 
     // Use d3 to select the panel with id of `#sample-metadata`
@@ -16,19 +16,45 @@ function buildMetadata(sample) {
     // Use `Object.entries` to add each key and value pair to the panel
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
-    for (let [key, value] of Object.entries(sample)){
+    for (let [key, value] of Object.entries(data)){
       console.log(`${key}:${value}`)
       select.append("p").html(`${key}: ${value}`).style('font-weight','600')
     };
     // console.log(sample)
-  });
+ 
   
 
 
 
 
     // BONUS: Build the Gauge Chart
-    // buildGauge(data.WFREQ);
+    function buildGauge (value) {
+      var data = [
+        {
+          domain: { x: [0, 1], y: [0, 1] },
+          value: value,
+          title: { text: "Washing Frequency" },
+          type: "indicator",
+          mode: "gauge+number",
+          gauge: {
+            bar: { color: "darkblue" },
+            axis: { range: [0, 9] },
+            steps: [
+              { range: [0, 3], color: "red" },
+              { range: [3, 6], color: "yellow" },
+              { range: [6, 9], color: "green" }
+            ]}
+        }
+      ];
+      
+      var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+      Plotly.newPlot('gauge', data, layout);
+    };
+    buildGauge(data.WFREQ)
+
+
+
+ });
 };
 
 function buildCharts(sample) {
@@ -47,34 +73,34 @@ function buildCharts(sample) {
       y: sampleVal,
       mode: 'markers',
       marker: {
-        size: sampleVal
-      }
+        size: sampleVal,
+        color: otuID
+      },
+      hovertext: otuLabel
     };
     
     var data = [trace1];
     
     var layout = {
-      // title: 'Bubble Chart',
-      showlegend: false
-      // height: 600,
-      // width: 1200
+      showlegend: false,
+      height: 400,
+      width: 800
     };
     
     Plotly.newPlot('bubble', data, layout);
 
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
-    // otu_ids, and labels (10 each).
-    // top_val = sampleVal.slice(0,10)
-    // top_id = otuID.slice(0,10)
 
     top_val = sampleVal.sort((first, second) => second.first).slice(0,10);
     top_id = otuID
+    top_label = otuLabel
 
     var data = [{
       values: top_val,
       labels: top_id,
-      type: 'pie'
+      type: 'pie',
+      hovertext:top_label
     }];
     
     var layout = {
