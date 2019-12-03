@@ -34,7 +34,7 @@ function buildMetadata(sample) {
         {
           domain: { x: [0, 1], y: [0, 1] },
           value: value, 
-          title: { text: "Washing Frequency" },
+          title: { text: "Belly Button Washing Frequency" },
           type: "indicator",
           mode: "gauge+number",
           gauge: {
