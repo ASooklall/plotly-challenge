@@ -1,10 +1,11 @@
 function buildMetadata(sample) {
   // @TODO: Complete the following function that builds the metadata panel
     // Use `d3.json` to fetch the metadata for a sample
+
   // var selID = d3.select("#selDataset").node.text()
   // console.log(selID)
 
-  var url = "/metadata/940";
+  var url = "/metadata/" + sample;
   d3.json(url).then(data =>{
     // console.log(sample)
 
@@ -32,7 +33,7 @@ function buildMetadata(sample) {
       var data = [
         {
           domain: { x: [0, 1], y: [0, 1] },
-          value: value,
+          value: value, 
           title: { text: "Washing Frequency" },
           type: "indicator",
           mode: "gauge+number",
@@ -51,15 +52,14 @@ function buildMetadata(sample) {
       Plotly.newPlot('gauge', data, layout);
     };
     buildGauge(data.WFREQ)
-
-
-
  });
 };
 
+
+
 function buildCharts(sample) {
   // @TODO: Use `d3.json` to fetch the sample data for the plots
-  var url = "/samples/940"
+  var url = "/samples/" + sample
   d3.json(url).then(function(sample) {
     // console.log(sample)
 
