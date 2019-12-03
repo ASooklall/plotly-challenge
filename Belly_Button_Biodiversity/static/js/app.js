@@ -1,31 +1,26 @@
 function buildMetadata(sample) {
   // @TODO: Complete the following function that builds the metadata panel
     // Use `d3.json` to fetch the metadata for a sample
+  var selID = d3.select("#selDataset").node.property()
+  console.log(selID)
 
-  // var sampleID = d3.select("#selDataset").text()
-  var url = "/samples/940";
-  // var url = "/samples/" + sampleID
+  var url = "/metadata/940";
   d3.json(url).then(sample =>{
-    console.log(sample)
+    // console.log(sample)
+
     // Use d3 to select the panel with id of `#sample-metadata`
 
     var select = d3.select("#sample-metadata")
-    // console.log(select.text())
     // Use `.html("") to clear any existing metadata
-    select
-    .html("")
+    select.html("");
     // Use `Object.entries` to add each key and value pair to the panel
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
-    .append("p")
-    // .text("test")
-    .html("test")
-
-
-
-
-    console.log(sample)
-    console.log("Test")
+    for (let [key, value] of Object.entries(sample)){
+      console.log(`${key}:${value}`)
+      select.append("p").html(`${key}: ${value}`).style('font-weight','600')
+    };
+    // console.log(sample)
   });
   
 
@@ -40,12 +35,12 @@ function buildCharts(sample) {
   // @TODO: Use `d3.json` to fetch the sample data for the plots
   var url = "/samples/940"
   d3.json(url).then(function(sample) {
-    console.log(sample)
+    // console.log(sample)
 
     var otuID = sample.otu_ids;
     var sampleVal = sample.sample_values;
     var otuLabel = sample.otu_labels;
-    console.log(otuID)
+    // console.log(otuID)
     // @TODO: Build a Bubble Chart using the sample data
     var trace1 = {
       x: otuID,
@@ -75,7 +70,7 @@ function buildCharts(sample) {
 
     top_val = sampleVal.sort((first, second) => second.first).slice(0,10);
     top_id = otuID
-    
+
     var data = [{
       values: top_val,
       labels: top_id,
