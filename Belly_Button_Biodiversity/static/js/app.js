@@ -1,67 +1,40 @@
 function buildMetadata(sample) {
+  // @TODO: Complete the following function that builds the metadata panel
+    // Use `d3.json` to fetch the metadata for a sample
+
   // var sampleID = d3.select("#selDataset").text()
   var url = "/samples/940";
   // var url = "/samples/" + sampleID
   d3.json(url).then(sample =>{
     console.log(sample)
-    var select = d3.select("#sample-metadata")
-    select
-    .html("")
-  
-    console.log(sample)
-    console.log("Test")
-  });
-  // @TODO: Complete the following function that builds the metadata panel
-
-  // Use `d3.json` to fetch the metadata for a sample
     // Use d3 to select the panel with id of `#sample-metadata`
 
+    var select = d3.select("#sample-metadata")
+    // console.log(select.text())
     // Use `.html("") to clear any existing metadata
-
+    select
+    .html("")
     // Use `Object.entries` to add each key and value pair to the panel
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
+    .append("p")
+    // .text("test")
+    .html("test")
+
+
+
+
+    console.log(sample)
+    console.log("Test")
+  });
+  
+
+
+
 
     // BONUS: Build the Gauge Chart
     // buildGauge(data.WFREQ);
 };
-
-////////////////////////////////////
-// function buildPlot() {
-//   /* data route */
-// var url = "/samples/<sample>";
-// d3.json(url).then(function(sample) {
-
-//   console.log(sample);
-
-//   var data = sample;
-
-//   var layout = {
-//     scope: "usa",
-//     title: "Pet Pals",
-//     showlegend: false,
-//     height: 600,
-//           // width: 980,
-//     geo: {
-//       scope: "usa",
-//       projection: {
-//         type: "albers usa"
-//       },
-//       showland: true,
-//       landcolor: "rgb(217, 217, 217)",
-//       subunitwidth: 1,
-//       countrywidth: 1,
-//       subunitcolor: "rgb(255,255,255)",
-//       countrycolor: "rgb(255,255,255)"
-//     }
-//   };
-
-//   Plotly.newPlot("pie", data, layout);
-// });
-// }
-
-// buildPlot();
-//////////////////////////////////////////////////////////////////
 
 function buildCharts(sample) {
   // @TODO: Use `d3.json` to fetch the sample data for the plots
@@ -87,9 +60,9 @@ function buildCharts(sample) {
     
     var layout = {
       // title: 'Bubble Chart',
-      showlegend: false,
-      height: 800,
-      width: 1200
+      showlegend: false
+      // height: 600,
+      // width: 1200
     };
     
     Plotly.newPlot('bubble', data, layout);
@@ -97,8 +70,12 @@ function buildCharts(sample) {
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
-    top_val = sampleVal.slice(0,10)
-    top_id = otuID.slice(0,10)
+    // top_val = sampleVal.slice(0,10)
+    // top_id = otuID.slice(0,10)
+
+    top_val = sampleVal.sort((first, second) => second.first).slice(0,10);
+    top_id = otuID
+    
     var data = [{
       values: top_val,
       labels: top_id,
@@ -107,8 +84,8 @@ function buildCharts(sample) {
     
     var layout = {
       // title: 'Pie Chart',
-      height: 1000,
-      width: 1000
+      // height: 1000,
+      // width: 1000
     };
     
     Plotly.newPlot('pie', data, layout);
