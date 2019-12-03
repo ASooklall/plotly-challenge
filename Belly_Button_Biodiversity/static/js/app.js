@@ -34,7 +34,7 @@ function buildMetadata(sample) {
         {
           domain: { x: [0, 1], y: [0, 1] },
           value: value, 
-          title: { text: "Belly Button Washing Frequency" },
+          title: { text: "Belly Button Washing Frequency <br> Times per Week" },
           type: "indicator",
           mode: "gauge+number",
           gauge: {
@@ -74,6 +74,7 @@ function buildCharts(sample) {
       mode: 'markers',
       marker: {
         size: sampleVal,
+        colorscale: 'Rainbow',
         color: otuID
       },
       hovertext: otuLabel
@@ -82,9 +83,9 @@ function buildCharts(sample) {
     var data = [trace1];
     
     var layout = {
-      showlegend: false,
-      height: 400,
-      width: 800
+      showlegend: false
+      // height: 400,
+      // width: 800
     };
     
     Plotly.newPlot('bubble', data, layout);
